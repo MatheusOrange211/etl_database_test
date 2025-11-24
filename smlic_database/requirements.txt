@@ -1,0 +1,6 @@
+pandas
+supabase
+python-dotenv
+numpy
+# O módulo 'typing' é nativo do Python e não precisa ser listado.
+# Verifique as versões recomendadas ou mais recentes para maior estabilidade.
