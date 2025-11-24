@@ -1,0 +1,39 @@
+name: Sincronização Diária Sheets -> Supabase
+
+on:
+  schedule:
+    # Roda de Segunda a Sexta (1-5) às 09:00 UTC (06:00 BRT).
+    - cron: '0 9 * * 1-5'
+  workflow_dispatch:
+    # Permite execução manual
+
+jobs:
+  run-daily-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' 
+
+      - name: ⚙️ Instalar Dependências
+        run: pip install pandas supabase requests numpy python-dotenv 
+        # Adaptei o run para ter certeza que todas as libs estão inclusas
+
+      - name: 🚀 Executar Sincronização
+        run: python main.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          CADASTRO_SPREADSHEET: ${{ secrets.CADASTRO_SPREADSHEET }}
+          CONVENIO_SPREADSHEET: ${{ secrets.CONVENIO_SPREADSHEET }}
+          GEPRO_SPREADSHEET: ${{ secrets.GEPRO_SPREADSHEET }}
+          GEPRE_SPREADSHEET: ${{ secrets.GEPRE_SPREADSHEET }}
+          COEDI_SPREADSHEET: ${{ secrets.COEDI_SPREADSHEET }}
+          MODALIDADE_SPREADSHEET: ${{ secrets.MODALIDADE_SPREADSHEET }}
+          FLUXO_2_0_SPREADSHEET: ${{ secrets.FLUXO_2_0_SPREADSHEET }}
+          DOM_SPREADSHEET: ${{ secrets.DOM_SPREADSHEET }}
